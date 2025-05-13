@@ -37,7 +37,6 @@ OrdersProducts.belongsTo(Orders, {
   foreignKey: {
     field: 'id_order',
     allowNull: false,
-    unique: true,
     name: 'idOrder',
   },
 });
@@ -49,7 +48,6 @@ OrdersProducts.belongsTo(Products, {
   foreignKey: {
     field: 'id_product',
     allowNull: false,
-    unique: true,
     name: 'idProduct',
   },
 });
