@@ -39,32 +39,31 @@ const get = async (req, res) => {
   }
 };
 
-const create = async (corpo, res) => {
-  const {
-    zipCode,
-    state,
-    city,
-    street,
-    district,
-    numberForget,
-    idUser,
-  } = corpo;
-
-  const response = await Addresses.create({
-    zipCode,
-    state,
-    city,
-    street,
-    district,
-    numberForget,
-    idUser,
-  });
-
-  return res.status(200).send({
-    type: 'success',
-    message: 'Cadastro realizado com sucesso',
-    data: response,
-  });
+const create = async (corpo) => {
+  try {
+    const {
+      zipCode,
+      state,
+      city,
+      street,
+      district,
+      numberForget,
+      idUser,
+    } = corpo;
+  
+    const response = await Addresses.create({
+      zipCode,
+      state,
+      city,
+      street,
+      district,
+      numberForget,
+      idUser,
+    });
+    return response;
+  } catch (error) {
+      throw new Error(error.message)
+  }
 };
 
 const update = async (corpo, id) => {

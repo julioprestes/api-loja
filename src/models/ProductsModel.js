@@ -34,7 +34,7 @@ const Products = sequelize.define(
 );
 
 Products.belongsTo(Categories, {
-  as: 'product',
+  as: 'categories',
   onDelete: 'no action',
   onUpdate: 'no action',
   foreignKey: {

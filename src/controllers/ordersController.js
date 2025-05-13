@@ -1,3 +1,4 @@
+import Cupons from '../models/CuponsModel.js';
 import Orders from '../models/OrdersModel.js';
 
 const get = async (req, res) => {
@@ -39,34 +40,61 @@ const get = async (req, res) => {
   }
 };
 
-const create = async (corpo, res) => {
-  const {
-    status,
-    total,
-    totalDiscount,
-    idUserCostumer,
-    idUserDeliver,
-    idAddress,
-    idPayment,
-    idCupom,
-  } = corpo;
+const create = async (corpo) => {
+  try {
+    const {
+      status,
+      total,
+      totalDiscount,
+      idUserCustomer,
+      idUserDeliver,
+      idAddress,
+      idPayment,
+      idCupom,
+    } = corpo;
 
-  const response = await Orders.create({
-    status,
-    total,
-    totalDiscount,
-    idUserCostumer,
-    idUserDeliver,
-    idAddress,
-    idPayment,
-    idCupom,
-  });
+    let cupom;
+  
+    if (idCupom) {
+      cupom = await Cupons.findOne({
+        where: {
+          id: idCupom
+        } 
+      });
 
-  return res.status(200).send({
-    type: 'success',
-    message: 'Cadastro realizado com sucesso',
-    data: response,
-  });
+      if (!cupom) {
+          return response;
+      }
+
+      if (cupom.uses <= 0) {
+        return {
+          type: 'error',
+          message: 'Cupom sem usos disponíveis',
+        };
+      }
+    }
+
+    const response = await Orders.create({
+      status,
+      total,
+      totalDiscount,
+      idUserCustomer,
+      idUserDeliver,
+      idAddress,
+      idPayment,
+      idCupom,
+    });
+
+    if (cupom) {
+      cupom.uses -= 1;
+      await cupom.save();
+    }
+
+    return response;
+  } catch (error) {
+    throw new Error(error.message)
+  }
+  
 };
 
 const update = async (corpo, id) => {

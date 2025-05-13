@@ -39,26 +39,26 @@ const get = async (req, res) => {
   }
 };
 
-const create = async (corpo, res) => {
-  const {
-    code,
-    type,
-    value,
-    uses,
-  } = corpo;
+const create = async (corpo) => {
+  try {
+    const {
+      code,
+      type,
+      value,
+      uses,
+    } = corpo;
 
-  const response = await Cupons.create({
-    code,
-    type,
-    value,
-    uses,
-  });
+    const response = await Cupons.create({
+      code,
+      type,
+      value,
+      uses,
+    });
 
-  return res.status(200).send({
-    type: 'success',
-    message: 'Cadastro realizado com sucesso',
-    data: response,
-  });
+    return response;
+  } catch (error) {
+    throw new Error(error.message)
+  }
 };
 
 const update = async (corpo, id) => {

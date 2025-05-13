@@ -41,20 +41,20 @@ const get = async (req, res) => {
   }
 };
 
-const create = async (corpo, res) => {
-  const {
-    name,
-  } = corpo;
-
-  const response = await Payments.create({
-    name,
-  });
-
-  return res.status(200).send({
-    type: 'success',
-    message: 'Cadastro realizado com sucesso',
-    data: response,
-  });
+const create = async (corpo) => {
+  try {
+    const {
+      name,
+    } = corpo;
+  
+    const response = await Payments.create({
+      name,
+    });
+  
+    return response;
+  } catch (error) {
+    throw new Error(error.message)
+  }
 };
 
 const update = async (corpo, id) => {
