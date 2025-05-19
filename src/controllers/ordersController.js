@@ -1,24 +1,35 @@
 import Cupons from '../models/CuponsModel.js';
 import Orders from '../models/OrdersModel.js';
+import OrdersProducts from '../models/OrdersProductsModel.js';
 
 const get = async (req, res) => {
   try {
     const id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
 
     if (!id) {
-      const response = await Orders.findAll({
+      const orders = await Orders.findAll({
         order: [['id', 'asc']],
+        include: [{
+          model: OrdersProducts,
+          as: 'orders_products'
+        }]
       });
       return res.status(200).send({
         type: 'success',
         message: 'Registros carregados com sucesso',
-        data: response,
+        data: orders,
       });
     }
 
-    const response = await Orders.findOne({ where: { id } });
+    const order = await Orders.findOne({
+      where: { id },
+      include: [{
+        model: OrdersProducts,
+        as: 'orders_products'
+      }]
+    });
 
-    if (!response) {
+    if (!order) {
       return res.status(200).send({
         type: 'error',
         message: `Nenhum registro com id ${id}`,
@@ -29,7 +40,7 @@ const get = async (req, res) => {
     return res.status(200).send({
       type: 'success',
       message: 'Registro carregado com sucesso',
-      data: response,
+      data: order,
     });
   } catch (error) {
     return res.status(200).send({

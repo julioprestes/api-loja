@@ -1,11 +1,47 @@
-// import Addresses from "./AddressesModel.js";
-// import Categories from "./CategoriesModel.js";
-// import Cupons from "./CuponsModel.js";
-// import Orders from "./OrdersModel.js";
-// import OrdersProducts from "./OrdersProductsModel.js";
-// import Payments from "./PaymentsModel.js";
-// import Products from "./ProductsModel.js";
-// import Users from "./UsersModel.js";
+import Addresses from "./AddressesModel.js";
+import Categories from "./CategoriesModel.js";
+import Cupons from "./CuponsModel.js";
+import Orders from "./OrdersModel.js";
+import OrdersProducts from "./OrdersProductsModel.js";
+import Payments from "./PaymentsModel.js";
+import Products from "./ProductsModel.js";
+import Users from "./UsersModel.js";
+
+// Associações
+Orders.hasMany(OrdersProducts, {
+  as: 'orders_products',
+  foreignKey: 'idOrder'
+});
+OrdersProducts.belongsTo(Orders, {
+  as: 'orders',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+  foreignKey: {
+    field: 'id_order',
+    allowNull: false,
+    name: 'idOrder',
+  },
+});
+OrdersProducts.belongsTo(Products, {
+  as: 'products',
+  onDelete: 'no action',
+  onUpdate: 'no action',
+  foreignKey: {
+    field: 'id_product',
+    allowNull: false,
+    name: 'idProduct',
+  },
+});
+
+export {
+  Orders,
+  OrdersProducts,
+  Products,
+  Users,
+  Addresses,
+  Payments,
+  Cupons
+};
 
 
 // (async () => {

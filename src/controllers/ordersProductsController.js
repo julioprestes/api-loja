@@ -42,14 +42,14 @@ const get = async (req, res) => {
 const create = async (corpo) => {
   try {
     const {
-      priceProduct,
+      priceProducts,
       quantity,
       idOrder,
       idProduct,
     } = corpo;
   
     const response = await OrdersProducts.create({
-      priceProduct,
+      priceProducts,
       quantity,
       idOrder,
       idProduct,

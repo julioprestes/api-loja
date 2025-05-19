@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/postgres.js';
-import Orders from './OrdersModel.js';
 import Products from './ProductsModel.js';
 
 const OrdersProducts = sequelize.define(
@@ -21,6 +20,16 @@ const OrdersProducts = sequelize.define(
       defaultValue: 1,
       allowNull: false,
     },
+    idOrder: {
+      field: 'id_order',
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    idProduct: {
+      field: 'id_product',
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     freezeTableName: true,
@@ -29,27 +38,5 @@ const OrdersProducts = sequelize.define(
     updatedAt: 'updated_at',
   },
 );
-
-OrdersProducts.belongsTo(Orders, {
-  as: 'orders',
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
-  foreignKey: {
-    field: 'id_order',
-    allowNull: false,
-    name: 'idOrder',
-  },
-});
-
-OrdersProducts.belongsTo(Products, {
-  as: 'products',
-  onDelete: 'no action',
-  onUpdate: 'no action',
-  foreignKey: {
-    field: 'id_product',
-    allowNull: false,
-    name: 'idProduct',
-  },
-});
 
 export default OrdersProducts;
