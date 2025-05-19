@@ -32,8 +32,8 @@ const OrdersProducts = sequelize.define(
 
 OrdersProducts.belongsTo(Orders, {
   as: 'orders',
-  onDelete: 'no action',
-  onUpdate: 'no action',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
   foreignKey: {
     field: 'id_order',
     allowNull: false,
