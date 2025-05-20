@@ -70,7 +70,7 @@ Orders.belongsTo(Payments, {
   onDelete: 'no action',
   onUpdate: 'no action',
   foreignKey: {
-    field: 'id_user_costumer',
+    field: 'id_payment',
     allowNull: false,
     name: 'idPayment',
   },
