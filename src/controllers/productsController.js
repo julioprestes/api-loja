@@ -183,16 +183,17 @@ const destroy = async (req, res) => {
         if (!response) {
             return res.status(404).send('nao achou')
         }   
-        
-        const caminhoImagem = path.resolve(response.imagemLink);
-        fs.unlink(caminhoImagem, (err) => {
-            if (err) {
-                console.log('erro ao deletar arquivo');
-                return
-            }
-            console.log('arquivo deletado com sucesso');
-            
-        })
+
+        if (response.image) {
+            const caminhoImagem = path.resolve(response.image);
+            fs.unlink(caminhoImagem, (err) => {
+                if (err) {
+                    console.log('erro ao deletar arquivo');
+                    return;
+                }
+                console.log('arquivo deletado com sucesso');
+            });
+        }
 
         await response.destroy();
 

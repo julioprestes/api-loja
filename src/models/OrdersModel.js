@@ -66,7 +66,7 @@ Orders.belongsTo(Addresses, {
 });
 
 Orders.belongsTo(Payments, {
-  as: 'payment',
+  as: 'payments',
   onDelete: 'no action',
   onUpdate: 'no action',
   foreignKey: {

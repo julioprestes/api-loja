@@ -19,7 +19,7 @@ const OrdersProducts = sequelize.define(
       type: DataTypes.INTEGER,
       defaultValue: 1,
       allowNull: false,
-    },
+    },  
     idOrder: {
       field: 'id_order',
       type: DataTypes.INTEGER,

@@ -44,7 +44,7 @@ export {
 };
 
 
-// (async () => {
+//  (async () => {
 //     await Users.sync({ force:true });
 //     await Payments.sync({ force:true });
 //     await Addresses.sync({ force:true });
@@ -53,4 +53,4 @@ export {
 //     await Orders.sync({ force:true });
 //     await Products.sync({ force:true });
 //     await OrdersProducts.sync({ force:true });
-// })();
+//  })();
