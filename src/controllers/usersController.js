@@ -2,6 +2,7 @@ import Users from "../models/UsersModel.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import sendMail from "../utils/email.js";
+import { Op } from "sequelize";
 
 const get = async (req, res) => {
     try {
@@ -174,6 +175,43 @@ const recuperarSenha = async (req, res) => {
     }
 };
 
+const redefinirSenha = async (req, res) => {
+    try {
+        const { codigo, novaSenha } = req.body;
+
+        const user = await Users.findOne({
+            where: {
+                codigoSenha: codigo,
+                codigoSenhaExpiracao: {
+                    [Op.gt]: new Date(),
+                },
+            },
+        });
+
+        if (!user) {
+            return res.status(400).send({
+                message: 'Código inválido ou expirado.',
+            });
+        }
+
+        const novaSenhaHash = await bcrypt.hash(novaSenha, 10);
+
+        user.passwordHash = novaSenhaHash; 
+        user.codigoSenha = null; 
+        user.codigoSenhaExpiracao = null; 
+
+        await user.save();
+
+        return res.status(200).send({
+            message: 'Senha redefinida com sucesso.',
+        });
+    } catch (error) {
+        return res.status(500).send({
+            message: error.message,
+        });
+    }
+};
+
 const getDataByToken = async (req, res) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
@@ -290,5 +328,6 @@ export default {
     destroy,
     login,
     getDataByToken,
-    recuperarSenha
+    recuperarSenha,
+    redefinirSenha
 }

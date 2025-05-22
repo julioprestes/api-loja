@@ -10,4 +10,5 @@ export default (app) => {
     app.delete('/users/:id', usersController.destroy);
     app.post('/users/login',usersController.login);
     app.post('/users/recuperar-senha',usersController.recuperarSenha);
+    app.post('/users/redefinir-senha', usersController.redefinirSenha);
 }
