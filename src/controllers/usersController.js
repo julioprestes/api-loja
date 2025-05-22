@@ -227,9 +227,8 @@ const getDataByToken = async (req, res) => {
         }
 
         const usuario = await Users.findOne({
-            where: {
-                id: user.idUsers
-            },
+            where: { id: user.idUsers },
+            attributes: ['id', 'nome', 'email', 'role']
         });
         
         if (!usuario) {
