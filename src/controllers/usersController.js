@@ -230,7 +230,6 @@ const getDataByToken = async (req, res) => {
             where: {
                 id: user.idUsers
             },
-            attributes: []
         });
         
         if (!usuario) {
