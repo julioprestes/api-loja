@@ -33,14 +33,4 @@ const Products = sequelize.define(
   },
 );
 
-Products.belongsTo(Categories, {
-  as: 'categories',
-  onDelete: 'no action',
-  onUpdate: 'no action',
-  foreignKey: {
-    field: 'id_category',
-    name: 'idCategory',
-  },
-});
-
 export default Products;

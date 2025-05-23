@@ -33,6 +33,22 @@ OrdersProducts.belongsTo(Products, {
   },
 });
 
+Categories.hasMany(Products, {
+  foreignKey: {
+    field: 'id_category',
+    name: 'idCategory',
+  },
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+Products.belongsTo(Categories, {
+  as: 'categories',
+  foreignKey: {
+    field: 'id_category',
+    name: 'idCategory',
+  },
+});
+
 export {
   Orders,
   OrdersProducts,
@@ -40,7 +56,8 @@ export {
   Users,
   Addresses,
   Payments,
-  Cupons
+  Cupons,
+  Categories
 };
 
 
