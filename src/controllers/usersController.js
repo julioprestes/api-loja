@@ -119,7 +119,12 @@ const login = async (req, res) => {
             const token = jwt.sign({ idUsers: user.id, nome: user.nome, email: user.email, idCargo: user.idCargo }, process.env.TOKEN_KEY, { expiresIn: '8h'});
             return res.status(200).send({
                 message: 'Sucesso no Login',
-                response: token
+                response: token,
+                user: {
+                    id: user.id,
+                    nome: user.nome,
+                    email: user.email
+                }
             })
         } else {
             return res.status(400).send ({

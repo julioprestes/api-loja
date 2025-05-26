@@ -6,4 +6,6 @@ export default (app) => {
     app.post('/cupons', cuponsController.persist);
     app.patch('/cupons/:id', cuponsController.persist);
     app.delete('/cupons/:id', cuponsController.destroy);
+    app.post('/cupons/verify', cuponsController.verify);
+
 }

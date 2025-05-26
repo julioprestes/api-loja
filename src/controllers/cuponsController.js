@@ -137,9 +137,36 @@ const destroy = async (req, res) => {
   }
 }
 
+export const verify = async (req, res) => {
+  try {
+    const { code } = req.body;
+    if (!code) {
+      return res.status(400).send({ message: "Código do cupom não informado" });
+    }
+
+    const cupom = await Cupons.findOne({ where: { code } });
+
+    if (!cupom) {
+      return res.status(200).send({ message: "Cupom não encontrado" });
+    }
+
+    if (cupom.uses <= 0) {
+      return res.status(200).send({ message: "Cupom sem usos disponíveis" });
+    }
+
+    return res.status(200).send({
+      ...cupom.dataValues,
+      message: "Cupom válido"
+    });
+  } catch (error) {
+    return res.status(500).send({ message: "Erro ao verificar cupom", error: error.message });
+  }
+};
+
 export default {
   get,
   persist,
   destroy,
   update,
+  verify
 };
