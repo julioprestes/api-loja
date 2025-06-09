@@ -6,6 +6,7 @@ import ordersRoute from "./ordersRoute.js";
 import paymentsRoute from "./paymentsRoute.js";
 import productsRoute from "./productsRoute.js";
 import usersRoute from "./usersRoute.js";
+import stripeRoute from "./stripeRoute.js";
 
 
 function Routes(app) {
@@ -17,7 +18,7 @@ function Routes(app) {
     ordersRoute(app);
     paymentsRoute(app);
     productsRoute(app);
-
+    app.use('/stripe', stripeRoute);
 }
 
 export default Routes;
